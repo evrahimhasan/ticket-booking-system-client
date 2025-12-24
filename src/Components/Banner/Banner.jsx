@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router';
 
 const Banner = () => {
     return (
@@ -20,6 +21,11 @@ const Banner = () => {
                         <p className="text-white mt-2 text-lg">
                             Find the best routes, compare schedules, and secure your seat in seconds for a hassle-free journey.
                         </p>
+                        <NavLink to="/search-ticket">
+                            <button className="mt-4 px-6 py-3 rounded-2xl bg-teal-400/90 text-white font-semibold shadow-lg hover:bg-red-700 transition transform hover:-translate-y-1">
+                                Get Your First Ticket
+                            </button>
+                        </NavLink>
                     </div>
 
                     <div className="absolute left-5 right-5 top-1/2 flex justify-between -translate-y-1/2">
@@ -40,8 +46,13 @@ const Banner = () => {
                             Travel Smart, Book Easy
                         </h1>
                         <p className="text-white mt-2 text-lg">
-                           Choose from thousands of buses, get real-time availability, and enjoy seamless online booking anytime.
+                            Choose from thousands of buses, get real-time availability, and enjoy seamless online booking anytime.
                         </p>
+                        <NavLink to="/search-ticket">
+                            <button className="mt-4 px-6 py-3 rounded-2xl bg-teal-400/90 text-white font-semibold shadow-lg hover:bg-red-700 transition transform hover:-translate-y-1">
+                                Get Your First Ticket
+                            </button>
+                        </NavLink>
                     </div>
 
                     <div className="absolute left-5 right-5 top-1/2 flex justify-between -translate-y-1/2">
@@ -64,6 +75,11 @@ const Banner = () => {
                         <p className="text-white mt-2 text-lg">
                             Discover affordable bus tickets, reliable operators, and convenient departures to any destination.
                         </p>
+                        <NavLink to="/search-ticket">
+                            <button className="mt-4 px-6 py-3 rounded-2xl bg-teal-400/90 text-white font-semibold shadow-lg hover:bg-red-700 transition transform hover:-translate-y-1">
+                                Get Your First Ticket
+                            </button>
+                        </NavLink>
                     </div>
 
                     <div className="absolute left-5 right-5 top-1/2 flex justify-between -translate-y-1/2">
