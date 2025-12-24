@@ -1,11 +1,12 @@
 import React from 'react';
 import Banner from '../../Components/Banner/Banner';
-import TicketBooking from '../../Components/TicketBooking/TicketBooking';
+import WhyChoseUs from '../../Components/WhyChoseUs/WhyChoseUs';
 
 const Home = () => {
     return (
         <div>
             <Banner></Banner>
+            <WhyChoseUs></WhyChoseUs>
         </div>
     );
 };
