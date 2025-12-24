@@ -41,8 +41,14 @@ const Navbar = () => {
             <div className="nav flex flex-col md:flex-row gap-5 items-center">
                 <NavLink to="/" className={({ isActive }) => isActive ?
                     "text-orange-700 underline" : ""}>Home</NavLink>
-                <NavLink to="/pets" className={({ isActive }) => isActive ?
-                    "text-orange-700 underline" : ""}>Search</NavLink>
+                {
+                    user && (
+                        <>
+                            <NavLink to="/search-ticket" className={({ isActive }) => isActive ?
+                                "text-orange-700 underline" : ""}>Search Ticket</NavLink>
+                        </>
+                    )
+                }
                 <NavLink to="/pets" className={({ isActive }) => isActive ?
                     "text-orange-700 underline" : ""}>Offer</NavLink>
                 {

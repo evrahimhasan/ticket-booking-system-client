@@ -3,6 +3,7 @@ import RootLayout from "../RootLayout/RootLayout";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login";
 import SignUp from "../Pages/SignUp";
+import TicketBooking from "../Components/TicketBooking/TicketBooking";
 
 const router = createBrowserRouter([
     {
@@ -20,7 +21,11 @@ const router = createBrowserRouter([
             {
                 path: '/signup',
                 Component: SignUp
-            }
+            },
+            {
+                path: '/search-ticket',
+                Component: TicketBooking
+            },
         ]
     },
 ]);
