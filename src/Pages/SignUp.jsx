@@ -4,20 +4,23 @@ import { toast } from 'react-toastify';
 import { AuthContext } from '../Provider/AuthProvider';
 import { FaEye } from 'react-icons/fa';
 import { IoEyeOff } from 'react-icons/io5';
+import axios from 'axios';
 
 const SignUp = () => {
-    const { createUser, setUser, updateUser, googleSignIn } = use(AuthContext)
+    const { createUser, setUser, updateUser } = use(AuthContext)
     const [show, setShow] = useState(false);
     const navigate = useNavigate()
 
-    const handleSignup = (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault()
         // console.log(e.target)
         const form = e.target;
         const name = form.name.value;
-        const photo = form.photo.value;
         const email = form.email.value;
         const password = form.password.value;
+        const photo = form.photo
+        const file = photo.files[0]
+
         // console.log({ name, photo, email, password });
 
         const regExp = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
@@ -26,41 +29,53 @@ const SignUp = () => {
             return;
         }
 
-        createUser(email, password)
-            .then(result => {
-                const user = result.user;
-                // console.log(user);
-                updateUser({ displayName: name, photoURL: photo })
-                    .then(() => {
-                        setUser({ ...user, displayName: name, photoURL: photo })
-                        navigate('/')
-                        toast.success("SignUp Successful")
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        setUser(user)
-                    });
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                alert(errorCode, errorMessage)
-            });
-    }
 
-    const handleGoogleSignUp = () => {
-        googleSignIn()
-            .then(result => {
-                const user = result.user;
-                console.log(user);
-                alert('Google signUp successfully')
-                navigate(`${location.state ? location.state : '/'}`)
+        const res = await axios.post(`https://api.imgbb.com/1/upload?key=70a9b49715646353c3c427acfc6b5b47`, { image: file },
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                alert(errorCode, errorMessage)
-            });
+        const mainPhotoURL = res.data.data.display_url;
+
+        const formData = {
+            name,
+            email,
+            password,
+            mainPhotoURL,
+        }
+
+        console.log(formData);
+
+        if (res.data.success == true) {
+            createUser(email, password)
+                .then(result => {
+                    const user = result.user;
+                    // console.log(user);
+                    updateUser({ displayName: name, photoURL: mainPhotoURL })
+                        .then(() => {
+                            setUser({ ...user, displayName: name, photoURL: mainPhotoURL })
+                            navigate('/')
+                            toast.success("SignUp Successful")
+                            axios.post("http://localhost:5000/users", formData)
+                                .then(res => {
+                                    console.log(res.data)
+                                })
+                                .catch(error => {
+                                    console.log(error);
+                                })
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            setUser(user)
+                        });
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorCode, errorMessage)
+                });
+        }
     }
     return (
         <div className='flex justify-center min-h-screen items-center'>
@@ -81,7 +96,7 @@ const SignUp = () => {
                         {/* Photo URL */}
                         <div>
                             <label className="label">Photo URl</label>
-                            <input type="text"
+                            <input type="file"
                                 name='photo'
                                 className="input"
                                 placeholder="Photo URl"
@@ -112,32 +127,6 @@ const SignUp = () => {
                         </div>
 
                         <button type='submit' className="btn  mt-4 bg-gradient-to-r from-green-600 to-green-800 text-white">Sign Up</button>
-
-
-                        {/* Divider */}
-                        <div className="flex w-full flex-col">
-                            <div className="divider">OR</div>
-                        </div>
-
-
-
-                        <div>
-                            <button
-                                type="button"
-                                onClick={handleGoogleSignUp}
-                                className="flex items-center justify-center gap-3 bg-gray-100 text-gray-800 
-                            px-5 py-2 rounded-lg w-full font-semibold hover:bg-gray-300 transition-colors cursor-pointer"
-                            >
-                                <img
-                                    src="https://www.svgrepo.com/show/475656/google-color.svg"
-                                    alt="google"
-                                    className="w-5 h-5"
-                                />
-                                Continue with Google
-                            </button>
-                        </div>
-
-
 
                         <p className='font-semibold pt-5 text-center'>Already Have An Account ?
                             <Link className='text-secondary' to='/login'> Login</Link></p>

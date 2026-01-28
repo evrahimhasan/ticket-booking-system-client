@@ -5,11 +5,13 @@ import {
     createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged,
     signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile
 } from "firebase/auth";
+import axios from 'axios';
 
 const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true)
+    const [role, setRole] = useState('');
 
     const googleProvider = new GoogleAuthProvider()
 
@@ -54,6 +56,15 @@ const AuthProvider = ({ children }) => {
     }, [])
 
 
+    useEffect(() => {
+        if (!user) return
+        axios.get(`http://localhost:5000/users/role/${user.email}`)
+            .then(res => {
+                setRole(res.data.role)
+            })
+    }, [user])
+
+    console.log(role);
 
     const authData = {
         user,
@@ -65,6 +76,7 @@ const AuthProvider = ({ children }) => {
         setLoading,
         updateUser,
         googleSignIn,
+        role,
 
     }
     return <AuthContext value={authData}>{children}</AuthContext>;
