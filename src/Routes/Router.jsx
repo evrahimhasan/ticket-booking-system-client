@@ -7,6 +7,7 @@ import TicketBooking from "../Components/TicketBooking/TicketBooking";
 import DashBoardLayout from "../dashboardLayout/DashBoardLayout";
 import MainDashBoard from "../Pages/DashBoard/MainDashBoard";
 import AddTicket from "../Pages/DashBoard/AddTicket";
+import ManageTickets from "../Pages/DashBoard/ManageTickets";
 
 const router = createBrowserRouter([
     {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/add-ticket',
                 Component: AddTicket
+            },
+            {
+                path: '/dashboard/manage-ticket',
+                Component: ManageTickets
             }
         ]
     }

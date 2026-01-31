@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 const AddTicket = () => {
@@ -8,6 +9,15 @@ const AddTicket = () => {
         setLoading(true);
 
         const form = e.target;
+        const file = form.busImage.files[0]
+
+        const res = await axios.post(`https://api.imgbb.com/1/upload?key=70a9b49715646353c3c427acfc6b5b47`, { image: file },
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            })
+        const mainPhotoURL = res.data.data.display_url;
 
         const ticketData = {
             busName: form.busName.value,
@@ -20,10 +30,23 @@ const AddTicket = () => {
             price: Number(form.price.value),
             totalSeats: Number(form.totalSeats.value),
             status: form.status.value,
-            createdAt: new Date()
+            mainPhotoURL
         };
         console.log(ticketData);
+
+        if (res.data.success == true) {
+            axios.post('http://localhost:5000/tickets', ticketData)
+                .then(res => {
+                    console.log(res.data);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }
+
+
+
 
     return (
         <div className="max-w-xl mx-auto p-6 shadow rounded">
@@ -43,6 +66,13 @@ const AddTicket = () => {
                     <option value="AC">AC</option>
                     <option value="Non-AC">Non-AC</option>
                 </select>
+
+                <input
+                    type="file"
+                    name="busImage"
+                    required
+                    className="file-input file-input-bordered w-full"
+                />
 
                 <input name="busNumber"
                     placeholder="Bus Number"
