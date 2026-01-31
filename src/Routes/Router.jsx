@@ -9,6 +9,7 @@ import MainDashBoard from "../Pages/DashBoard/MainDashBoard";
 import AddTicket from "../Pages/DashBoard/AddTicket";
 import ManageTickets from "../Pages/DashBoard/ManageTickets";
 import Ticket from "../Components/Ticket";
+import SeatSelection from "../Components/SeatSelection";
 
 const router = createBrowserRouter([
     {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
             {
                 path: '/ticket',
                 Component: Ticket
+            },
+            {
+                path: '/seat-selection',
+                Component: SeatSelection
             }
         ]
     },

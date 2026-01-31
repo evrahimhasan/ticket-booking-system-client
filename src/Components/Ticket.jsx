@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const Ticket = () => {
     const buses = [
@@ -146,7 +147,8 @@ const Ticket = () => {
                                 <p className="text-3xl font-bold text-green-600 dark:text-green-400">
                                     ৳{bus.price}
                                 </p>
-                                <button
+                                <Link
+                                to={'/seat-selection'}
                                     className="
                 mt-3 px-8 py-3 rounded-lg 
                 bg-red-600 hover:bg-red-700 text-white font-semibold 
@@ -155,7 +157,7 @@ const Ticket = () => {
               "
                                 >
                                     View Seats
-                                </button>
+                                </Link>
                             </div>
                         </div>
                     </div>
