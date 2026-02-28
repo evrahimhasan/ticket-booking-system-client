@@ -1,166 +1,89 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 
 const Ticket = () => {
-    const buses = [
-        {
-            "busName": "GreenLine Express",
-            "busType": "AC Sleeper",
-            "busNumber": "DL-05-AB-1234",
-            "from": "Dhaka",
-            "to": "Chittagong",
-            "journeyDate": "2026-02-05",
-            "departureTime": "22:30",
-            "price": 1200,
-            "totalSeats": 40,
-            "mainPhotoURL": "https://example.com/images/bus1.jpg"
-        },
-        {
-            "busName": "Skyline Travels",
-            "busType": "Non-AC Seater",
-            "busNumber": "DL-12-CD-5678",
-            "from": "Dhaka",
-            "to": "Sylhet",
-            "journeyDate": "2026-02-06",
-            "departureTime": "18:00",
-            "price": 800,
-            "totalSeats": 45,
-            "mainPhotoURL": "https://example.com/images/bus2.jpg"
-        },
-        {
-            "busName": "RapidLine",
-            "busType": "AC Semi-Sleeper",
-            "busNumber": "DL-23-EF-9012",
-            "from": "Chittagong",
-            "to": "Dhaka",
-            "journeyDate": "2026-02-05",
-            "departureTime": "21:00",
-            "price": 1100,
-            "totalSeats": 42,
-            "mainPhotoURL": "https://example.com/images/bus3.jpg"
-        },
-        {
-            "busName": "Comfort Travels",
-            "busType": "AC Sleeper",
-            "busNumber": "DL-34-GH-3456",
-            "from": "Dhaka",
-            "to": "Khulna",
-            "journeyDate": "2026-02-07",
-            "departureTime": "20:30",
-            "price": 1000,
-            "totalSeats": 40,
-            "mainPhotoURL": "https://example.com/images/bus4.jpg"
-        },
-        {
-            "busName": "SilverLine",
-            "busType": "Non-AC Seater",
-            "busNumber": "DL-45-IJ-7890",
-            "from": "Dhaka",
-            "to": "Rajshahi",
-            "journeyDate": "2026-02-08",
-            "departureTime": "19:45",
-            "price": 750,
-            "totalSeats": 50,
-            "mainPhotoURL": "https://example.com/images/bus5.jpg"
-        }
-    ]
+
+    const [tickets, setTickets] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:5000/tickets")
+            .then(res => res.json())
+            .then(data => setTickets(data));
+    }, []);
+
+    console.log(tickets);
 
     return (
         <div className="space-y-6">
-            {buses.map((bus, index) => (
-                <div
-                    key={index}
-                    className="mx-auto w-full max-w-4xl rounded-xl border border-gray-200 bg-white p-5 shadow-md transition-all hover:shadow-lg dark:border-gray-700 dark:bg-gray-800 dark:shadow-gray-950/30"
-                >
-                    {/* Top row: Operator Name + Route/Service Name + AC/Non-AC */}
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
-                        <div>
-                            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
-                                {bus.busName}
-                            </h3>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                                {bus.busNumber} {bus.busType.toUpperCase()} {/* e.g. 4053 MEHER-KUSH-COX (PADMA) */}
-                            </p>
-                        </div>
+            {tickets.map((ticket) => (
+                <div key={ticket._id} className="max-w-5xl mx-auto bg-white rounded-lg border border-gray-200 shadow-sm flex flex-col md:flex-row items-stretch p-4 gap-4">
 
-                        <div className="flex items-center gap-3">
-                            <span className={`px-3 py-1 rounded-full text-xs font-medium ${bus.busType.toLowerCase().includes('ac')
-                                ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300'
-                                : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'
-                                }`}>
-                                {bus.busType} AC
+                    {/* 1. Left Section: Bus Name & Type */}
+                    <div className="flex-1 border-r-0 md:border-r border-gray-100 pr-4">
+                        <h2 className="text-xl font-bold text-gray-800">{ticket.busName}</h2>
+                        <p className="text-xs text-gray-400 mt-1 uppercase tracking-wider">
+                           Bus Number: {ticket.busNumber}
+                        </p>
+
+                        <div className="mt-3 flex items-center gap-2">
+                            <span className="px-2 py-1 border border-gray-300 rounded text-[10px] font-bold text-gray-500 flex items-center gap-1">
+                                <span className="opacity-50">❄️</span> {ticket.busType === 'AC' ? 'AC' : 'NON AC'}
                             </span>
-                            {bus.busType.toLowerCase().includes('non') && (
-                                <span className="text-xs text-green-600 dark:text-green-400 font-medium">
-                                    No Extra Charge
-                                </span>
-                            )}
+                        </div>
+
+                        <button className="mt-6 text-red-500 italic text-xs hover:underline">
+                            Cancellation policy
+                        </button>
+                    </div>
+
+                    {/* 2. Middle Section: Timing & Seats */}
+                    <div className="flex-[2] flex flex-col justify-center px-4 border-b md:border-b-0 md:border-r border-gray-100 pb-4 md:pb-0">
+                        <div className="flex justify-between items-start border-b border-gray-100 pb-4 mb-4">
+                            <div className="text-left">
+                                <p className="text-[10px] text-gray-400 uppercase">Starting</p>
+                                <p className="text-xl font-bold text-gray-800">{ticket.departureTime}</p>
+                                <p className="text-xs text-gray-500 italic">{ticket.from || "Abdullahpur"}</p>
+                            </div>
+
+                            <div className="flex flex-col items-center">
+                                <div className="relative w-24 h-[2px] bg-gray-300 mt-6">
+                                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-white px-1 text-gray-400 text-lg">
+                                        <img src={ticket.mainPhotoURL} alt="" />
+                                    </span>
+                                </div>
+                                <p className="text-[11px] mt-2">
+                                    <span className="text-gray-400">Seats Left: </span>
+                                    <span className="text-red-500 font-bold">{ticket.seatsLeft || ticket.totalSeats}</span>
+                                </p>
+                            </div>
+
+                            <div className="text-right">
+                                <p className="text-[10px] text-gray-400 opacity-0 uppercase">Arrival</p> {/* Alignment spacer */}
+                                <p className="text-xl font-bold text-gray-800">{ticket.arrivalTime}</p>
+                                <p className="text-xs text-gray-500 italic">{ticket.to || "Teknaf"}</p>
+                            </div>
                         </div>
                     </div>
 
-                    <hr className="my-4 border-gray-200 dark:border-gray-700" />
-
-                    {/* Main content: Times, Points, Seats, Price */}
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                        {/* Left: Departure */}
-                        <div className="flex-1">
-                            <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                                {bus.departureTime}
-                            </p>
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                {bus.from}
-                            </p>
-                            <p className="mt-1 text-xs text-gray-600 dark:text-gray-500">
-                                Boarding Point
-                            </p>
-                        </div>
-
-                        {/* Middle: Seats Left + Arrow */}
-                        <div className="flex flex-col items-center text-center">
-                            <div className="flex items-center gap-4 mb-2">
-                                <div className="text-sm font-medium text-red-600 dark:text-red-400">
-                                    Seats Left: {bus.totalSeats > 0 ? bus.totalSeats : 'Sold Out'}
-                                </div>
-                                <div className="h-8 w-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700">
-                                    🚌
-                                </div>
+                    {/* 3. Right Section: Price & Action */}
+                    <div className="flex-1 flex flex-col items-center md:items-end justify-between min-w-[150px]">
+                        <div className="text-right">
+                            <div className="inline-block border border-green-500 text-green-500 text-[10px] px-2 py-0.5 rounded mb-2 font-medium">
+                                No Extra Charge
                             </div>
-                            <div className="h-0.5 w-20 sm:w-32 bg-gray-300 dark:bg-gray-600" />
-                            <span className="text-xs text-gray-500 dark:text-gray-400 mt-1">to</span>
-                        </div>
-
-                        {/* Right: Arrival + Price + Button */}
-                        <div className="flex-1 flex flex-col md:items-end items-start md:text-right gap-4">
-                            <div>
-                                <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                                    {bus.departureTime} {/* এখানে arrival time থাকলে replace করো, JSON-এ নেই তাই placeholder */}
-                                </p>
-                                <p className="text-sm text-gray-500 dark:text-gray-400">
-                                    {bus.to}
-                                </p>
-                                <p className="mt-1 text-xs text-gray-600 dark:text-gray-500">
-                                    Dropping Point
-                                </p>
-                            </div>
-
-                            <div className="flex flex-col items-end">
-                                <p className="text-3xl font-bold text-green-600 dark:text-green-400">
-                                    ৳{bus.price}
-                                </p>
-                                <Link
-                                to={'/seat-selection'}
-                                    className="
-                mt-3 px-8 py-3 rounded-lg 
-                bg-red-600 hover:bg-red-700 text-white font-semibold 
-                transition-colors focus:outline-none focus:ring-2 focus:ring-red-500
-                dark:bg-red-600 dark:hover:bg-red-500
-              "
-                                >
-                                    View Seats
-                                </Link>
+                            <div className="flex items-center justify-end text-red-500 font-bold text-2xl">
+                                <span className="text-xl mr-0.5">৳</span>
+                                {ticket.price}
                             </div>
                         </div>
+
+                        <Link
+                            to='/seat-selection'
+                            className="w-full mt-4 bg-[#D31317] hover:bg-red-700 text-white font-bold py-2.5 px-6 rounded-md transition-colors text-sm">
+                            View Seats
+                        </Link>
                     </div>
+
                 </div>
             ))}
         </div>

@@ -27,6 +27,7 @@ const AddTicket = () => {
             to: form.to.value,
             journeyDate: form.journeyDate.value,
             departureTime: form.departureTime.value,
+            arrivalTime: form.arrivalTime.value,
             price: Number(form.price.value),
             totalSeats: Number(form.totalSeats.value),
             status: form.status.value,
@@ -95,10 +96,17 @@ const AddTicket = () => {
                     required
                     className="input input-bordered w-full" />
 
-                <input type="time"
-                    name="departureTime"
-                    required
-                    className="input input-bordered w-full" />
+                <div className="grid grid-cols-2 gap-2">
+                    <input type="time"
+                        name="departureTime"
+                        required
+                        className="input input-bordered w-full" />
+
+                    <input type="time"
+                        name="arrivalTime"
+                        required
+                        className="input input-bordered w-full" />
+                </div>
 
                 <div className="grid grid-cols-2 gap-2">
                     <input type="number"
