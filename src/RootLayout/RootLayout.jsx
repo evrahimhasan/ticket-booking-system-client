@@ -8,11 +8,8 @@ const RootLayout = () => {
     return (
         <div className="flex flex-col min-h-screen">
             <div className="relative">
-                {/* Navbar ekhon Banner-er upore thakbe */}
                 <Navbar />
                 <Banner />
-
-                {/* Onnano sections ekhane thakbe */}
             </div>
             <main className='flex-1 w-11/12 mx-auto my-3'>
                 <Outlet></Outlet>

@@ -4,7 +4,7 @@ import { FaBus, FaClock, FaMobileAlt, FaShieldAlt } from 'react-icons/fa';
 const WhyChoseUs = () => {
     return (
         <section className="bg-gray-50 py-16">
-            <div className="container mx-auto px-4 text-center">
+            <div className="container mx-auto text-center">
 
                 {/* Section Title */}
                 <h2 className="text-3xl md:text-4xl font-bold mb-4">

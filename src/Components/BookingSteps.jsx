@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { IoCheckmarkCircleSharp, IoSearchCircle } from 'react-icons/io5';
 import { MdPayment } from 'react-icons/md';
@@ -58,17 +59,18 @@ const BookingSteps = () => {
         //         ))}
         //     </div>
         // </div>
-        <div className="mx-auto max-w-11/12 px-4 py-16 sm:px-6 lg:px-8">
-            <h2 className="mb-12 text-center text-3xl font-bold tracking-tight sm:text-4xl 
+        <section className="bg-gray-50 py-16">
+            <div className="container mx-auto text-center">
+                <h2 className="mb-12 text-center text-3xl font-bold tracking-tight sm:text-4xl 
                  text-gray-900 dark:text-white">
-                Buy tickets in 3 easy steps
-            </h2>
+                    Buy tickets in 3 easy steps
+                </h2>
 
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6 lg:gap-8">
-                {steps.map((step) => (
-                    <div
-                        key={step.number}
-                        className="
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-6 lg:gap-8">
+                    {steps.map((step) => (
+                        <div
+                            key={step.number}
+                            className="
           group relative rounded-2xl 
           bg-white dark:bg-gray-800
           p-8 
@@ -77,10 +79,10 @@ const BookingSteps = () => {
           hover:-translate-y-2 hover:shadow-xl dark:hover:shadow-2xl
           border border-gray-200 dark:border-gray-700
         "
-                    >
-                        {/* Icon circle */}
-                        <div
-                            className="
+                        >
+                            {/* Icon circle */}
+                            <div
+                                className="
             mx-auto mb-6 flex h-20 w-20 items-center justify-center 
             rounded-full 
             bg-blue-100 dark:bg-blue-950/40
@@ -89,25 +91,25 @@ const BookingSteps = () => {
             transition-colors 
             group-hover:bg-blue-200 dark:group-hover:bg-blue-900/50
           "
-                        >
-                            {step.icon}
-                        </div>
+                            >
+                                {step.icon}
+                            </div>
 
-                        {/* Title */}
-                        <h3 className="mb-3 text-center text-xl font-semibold 
+                            {/* Title */}
+                            <h3 className="mb-3 text-center text-xl font-semibold 
                        text-gray-900 dark:text-blue-400">
-                            {step.title}
-                        </h3>
+                                {step.title}
+                            </h3>
 
-                        {/* Description */}
-                        <p className="text-center leading-relaxed 
+                            {/* Description */}
+                            <p className="text-center leading-relaxed 
                       text-gray-600 dark:text-gray-400">
-                            {step.description}
-                        </p>
+                                {step.description}
+                            </p>
 
-                        {/* Step number badge */}
-                        <div
-                            className="
+                            {/* Step number badge */}
+                            <div
+                                className="
             absolute -top-4 -right-4 
             flex h-10 w-10 items-center justify-center 
             rounded-full 
@@ -116,13 +118,14 @@ const BookingSteps = () => {
             text-lg font-bold 
             shadow-md dark:shadow-blue-500/30
           "
-                        >
-                            {step.number}
+                            >
+                                {step.number}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-        </div>
+        </section>
 
     );
 };
