@@ -1,14 +1,15 @@
-import React, { use, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { toast } from 'react-toastify';
 import { AiFillDashboard, AiFillHome, AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { NavLink } from 'react-router';
-import { MdDirectionsBus, MdOutlinePublishedWithChanges } from 'react-icons/md';
+import { MdDarkMode, MdDirectionsBus, MdLightMode, MdOutlinePublishedWithChanges } from 'react-icons/md';
 import { FiLogOut } from 'react-icons/fi';
 
 const Aside = () => {
     const { logOut } = use(AuthContext)
     const [open, setOpen] = useState(false);
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || "light")
 
     const handleLogout = () => {
         // console.log('user try to logout');
@@ -21,6 +22,17 @@ const Aside = () => {
             });
 
     }
+
+    useEffect(() => {
+        const html = document.querySelector('html')
+        html.setAttribute("data-theme", theme)
+        localStorage.setItem("theme", theme)
+    }, [theme])
+
+    const handleTheme = (checked) => {
+        setTheme(checked ? "dark" : "light")
+    }
+
     return (
         <div className="flex min-h-screen bg-gray-100">
 
@@ -33,7 +45,7 @@ const Aside = () => {
 
             {/* ASIDE AREA */}
             <aside
-                className={`fixed lg:static top-0 z-30 left-0 h-full w-64 bg-orange-600 text-white p-6 flex flex-col justify-between transform transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+                className={`fixed lg:static top-0 z-30 left-0 h-full w-64 bg-orange-500 text-white p-6 flex flex-col justify-between transform transition-transform duration-300 ${open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
                     }`}
             >
                 <div>
@@ -99,7 +111,7 @@ const Aside = () => {
                             <MdOutlinePublishedWithChanges className="h-5 w-5" /> Manage Ticket
                         </NavLink>
 
-                        
+
 
                         <NavLink
                             to="/dashboard/all-user"
@@ -125,6 +137,17 @@ const Aside = () => {
                         >
                             <MdOutlinePublishedWithChanges className="h-5 w-5" /> My Profile
                         </NavLink>
+                        {/* Theme Toggle */}
+                        <div className="flex items-center gap-2">
+                            <MdLightMode className='text-yellow-500' />
+                            <input
+                                type="checkbox"
+                                checked={theme === "dark"}
+                                onChange={(e) => handleTheme(e.target.checked)}
+                                className="toggle"
+                            />
+                            <MdDarkMode className='text-gray-500' />
+                        </div>
                     </nav>
                 </div>
 

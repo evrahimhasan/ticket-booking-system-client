@@ -33,12 +33,18 @@ const AllUser = () => {
     return (
         <div className="w-full max-w-7xl mx-auto p-3 sm:px-6 py-6 overflow-x-hidden min-h-screen">
 
-            <h2 className="text-xl font-semibold mb-6">All Users</h2>
+            <div className="flex flex-wrap justify-between items-center mb-6 gap-3">
+                <h2 className="text-xl text-orange-500 font-semibold">All User</h2>
+
+                <span className="bg-orange-100 text-orange-500 px-4 py-1 rounded-full text-sm font-semibold">
+                    Total: {users.length}
+                </span>
+            </div>
 
             {/* DESKTOP TABLE */}
             <div className="hidden md:block rounded-lg shadow overflow-x-auto">
                 <table className="min-w-full table-auto">
-                    <thead className="bg-red-600">
+                    <thead className="bg-orange-500 text-white">
                         <tr>
                             <th className="py-3 px-3 text-left">User</th>
                             <th className="py-3 px-3 text-left">Role</th>
@@ -63,7 +69,7 @@ const AllUser = () => {
                                     {/* User */}
                                     <td className="py-4 px-3">
                                         <div className="flex items-center gap-3">
-                                            <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-red-400 flex-shrink-0">
+                                            <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-orange-400 flex-shrink-0">
                                                 <img src={user.mainPhotoURL} alt={user.name} className="h-full w-full object-cover" />
                                             </div>
                                             <div>
@@ -117,7 +123,7 @@ const AllUser = () => {
 
                         <div className="flex justify-between items-center mb-2">
                             <div className="flex items-center gap-3">
-                                <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-red-400 flex-shrink-0">
+                                <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-orange-400 flex-shrink-0">
                                     <img src={user.mainPhotoURL} alt={user.name} className="h-full w-full object-cover" />
                                 </div>
                                 <div>

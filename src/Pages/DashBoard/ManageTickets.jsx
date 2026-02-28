@@ -57,7 +57,7 @@ const ManageTickets = () => {
         <div className="w-full max-w-7xl mx-auto p-3 sm:px-6 py-6 overflow-x-hidden min-h-screen">
 
             <div className="flex flex-wrap justify-between items-center mb-6 gap-3">
-                <h2 className="text-xl font-semibold">Manage Tickets</h2>
+                <h2 className="text-xl text-orange-500 font-semibold">Manage Tickets</h2>
 
                 <span className="bg-orange-100 text-orange-600 px-4 py-1 rounded-full text-sm font-semibold">
                     Total: {tickets.length}
@@ -104,7 +104,7 @@ const ManageTickets = () => {
                                         </div>
 
                                         <div className="text-sm text-gray-500">
-                                          Bus Number:  {ticket.busNumber}
+                                            Bus Number:  {ticket.busNumber}
                                         </div>
                                     </td>
 
@@ -224,7 +224,7 @@ const ManageTickets = () => {
                                 </div>
 
                                 <div className="text-sm text-gray-500">
-                                   Bus Number: {ticket.busNumber}
+                                    Bus Number: {ticket.busNumber}
                                 </div>
 
                             </div>
