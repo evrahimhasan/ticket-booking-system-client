@@ -54,87 +54,270 @@ const ManageTickets = () => {
         });
     };
     return (
-        <div className="p-6 bg-gray-50 min-h-screen">
-            <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-800">Manage Tickets</h2>
+        <div className="w-full max-w-7xl mx-auto p-3 sm:px-6 py-6 overflow-x-hidden min-h-screen">
+
+            <div className="flex flex-wrap justify-between items-center mb-6 gap-3">
+                <h2 className="text-xl font-semibold">Manage Tickets</h2>
+
                 <span className="bg-orange-100 text-orange-600 px-4 py-1 rounded-full text-sm font-semibold">
-                    Total: {tickets.length} Tickets
+                    Total: {tickets.length}
                 </span>
             </div>
 
-            {/* Table Container */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-                <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
-                        <thead className="bg-gray-50 border-b border-gray-200">
+            {/* DESKTOP TABLE */}
+            <div className="hidden md:block rounded-lg shadow overflow-x-auto">
+
+                <table className="min-w-full table-auto">
+
+                    <thead className="bg-orange-500 text-white">
+                        <tr>
+                            <th className="py-3 px-3 text-left">Bus</th>
+                            <th className="py-3 px-3 text-left">Route</th>
+                            <th className="py-3 px-3 text-left">Time</th>
+                            <th className="py-3 px-3 text-left">Price</th>
+                            <th className="py-3 px-3 text-left">Status</th>
+                            <th className="py-3 px-3 text-center">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody className="divide-y divide-gray-200">
+
+                        {tickets.length === 0 ? (
                             <tr>
-                                <th className="px-6 py-4 text-sm font-semibold text-gray-600">Bus Details</th>
-                                <th className="px-6 py-4 text-sm font-semibold text-gray-600">Route</th>
-                                <th className="px-6 py-4 text-sm font-semibold text-gray-600">Time & Date</th>
-                                <th className="px-6 py-4 text-sm font-semibold text-gray-600">Price</th>
-                                <th className="px-6 py-4 text-sm font-semibold text-gray-600">Status</th>
-                                <th className="px-6 py-4 text-sm font-semibold text-gray-600 text-center">Actions</th>
+                                <td colSpan={6} className="text-center py-10 text-gray-500">
+                                    No tickets found
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody className="divide-y divide-gray-100">
-                            {tickets.map((ticket) => (
-                                <tr key={ticket._id} className="hover:bg-gray-50 transition-colors">
-                                    <td className="px-6 py-4">
-                                        <div className="font-bold text-gray-800">{ticket.busName}</div>
-                                        <div className="text-xs text-gray-400">{ticket.busNumber}</div>
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <div className="text-sm text-gray-700">
-                                            <span className="font-medium">{ticket.from}</span>
-                                            <span className="mx-2 text-gray-400">→</span>
-                                            <span className="font-medium">{ticket.to}</span>
+                        ) : (
+
+                            tickets.map(ticket => (
+
+                                <tr
+                                    key={ticket._id}
+                                    className="hover:bg-gray-100 transition duration-200"
+                                >
+
+                                    {/* Bus */}
+                                    <td className="py-4 px-3">
+                                        <div className="font-semibold">
+                                            {ticket.busName}
+                                        </div>
+
+                                        <div className="text-sm text-gray-500">
+                                          Bus Number:  {ticket.busNumber}
                                         </div>
                                     </td>
-                                    <td className="px-6 py-4 text-sm text-gray-600">
-                                        <div>{ticket.journeyDate}</div>
-                                        <div className="text-xs text-blue-500 font-medium">{ticket.departureTime}</div>
-                                    </td>
-                                    <td className="px-6 py-4 font-bold text-gray-800">
-                                        ৳{ticket.price}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase ${ticket.status === 'active' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'
-                                            }`}>
-                                            {ticket.status || 'Active'}
+
+
+                                    {/* Route */}
+                                    <td className="py-4 px-3">
+
+                                        <span className="font-medium">
+                                            {ticket.from}
                                         </span>
+
+                                        <span className="mx-2">
+                                            →
+                                        </span>
+
+                                        <span className="font-medium">
+                                            {ticket.to}
+                                        </span>
+
                                     </td>
-                                    <td className="px-6 py-4">
+
+
+                                    {/* Time */}
+                                    <td className="py-4 px-3">
+
+                                        <div>
+                                            {ticket.journeyDate}
+                                        </div>
+
+                                        <div className="text-sm text-blue-500">
+                                            {ticket.departureTime}
+                                        </div>
+
+                                    </td>
+
+
+                                    {/* Price */}
+                                    <td className="py-4 px-3 font-semibold">
+
+                                        ৳{ticket.price}
+
+                                    </td>
+
+
+                                    {/* Status */}
+                                    <td className="py-4 px-3">
+
+                                        <span className={`px-2 py-1 rounded-full text-sm font-semibold
+                                        
+                                        ${ticket.status === "active"
+                                                ? "bg-green-100 text-green-700"
+                                                : "bg-red-100 text-red-700"
+                                            }
+                                        
+                                        `}>
+
+                                            {ticket.status || "active"}
+
+                                        </span>
+
+                                    </td>
+
+
+                                    {/* Actions */}
+                                    <td className="py-4 px-3 text-center">
+
                                         <div className="flex justify-center gap-3">
-                                            {/* Edit Button */}
+
                                             <button
-                                                className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white transition-all"
-                                                title="Edit Ticket"
+                                                className="p-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-600 hover:text-white"
                                             >
-                                                <FaEdit size={16} />
+                                                <FaEdit />
                                             </button>
-                                            {/* Delete Button */}
+
+
                                             <button
                                                 onClick={() => handleDelete(ticket._id)}
-                                                className="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-600 hover:text-white transition-all"
-                                                title="Delete Ticket"
+                                                className="p-2 bg-red-50 text-red-600 rounded-lg hover:bg-red-600 hover:text-white"
                                             >
-                                                <FaTrashAlt size={16} />
+                                                <FaTrashAlt />
                                             </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
 
-                {/* Pagination Placeholder */}
-                {tickets.length === 0 && (
-                    <div className="text-center py-10 text-gray-500">
-                        No tickets found. Add some from the "Add Ticket" section.
-                    </div>
-                )}
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            ))
+
+                        )}
+
+                    </tbody>
+
+                </table>
+
             </div>
+
+
+            {/* MOBILE CARD VIEW */}
+
+            <div className="md:hidden space-y-4">
+
+                {tickets.map(ticket => (
+
+                    <div
+                        key={ticket._id}
+                        className=" shadow rounded-lg p-4 border w-full overflow-hidden"
+                    >
+
+                        <div className="flex justify-between mb-2">
+
+                            <div>
+
+                                <div className="font-semibold">
+                                    {ticket.busName}
+                                </div>
+
+                                <div className="text-sm text-gray-500">
+                                   Bus Number: {ticket.busNumber}
+                                </div>
+
+                            </div>
+
+                            <span className={`px-3 py-1 rounded-full text-xs font-semibold
+                            
+                            ${ticket.status === "active"
+                                    ? "bg-green-100 text-green-700"
+                                    : "bg-red-100 text-red-700"
+                                }
+                            
+                            `}>
+
+                                {ticket.status || "active"}
+
+                            </span>
+
+                        </div>
+
+
+
+                        <div className="text-sm mt-2">
+
+                            <div>
+
+                                <span className="font-medium">
+                                    Route:
+                                </span>
+
+                                {" "}
+                                {ticket.from} → {ticket.to}
+
+                            </div>
+
+
+                            <div className="mt-1">
+
+                                <span className="font-medium">
+                                    Date:
+                                </span>
+
+                                {" "}
+                                {ticket.journeyDate}
+
+                            </div>
+
+
+                            <div>
+
+                                <span className="font-medium">
+                                    Time:
+                                </span>
+
+                                {" "}
+                                {ticket.departureTime}
+
+                            </div>
+
+
+                            <div className="mt-1 font-semibold">
+
+                                ৳{ticket.price}
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div className="flex gap-2 mt-3">
+
+                            <button
+                                className="btn btn-sm flex-1 text-blue-600"
+                            >
+                                Edit
+                            </button>
+
+
+                            <button
+                                onClick={() => handleDelete(ticket._id)}
+                                className="btn btn-sm flex-1 text-red-600"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                ))}
+
+            </div>
+
         </div>
     );
 };

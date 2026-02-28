@@ -11,7 +11,7 @@ const Ticket = () => {
             .then(data => setTickets(data));
     }, []);
 
-    console.log(tickets);
+    // console.log(tickets);
 
     return (
         <div className="space-y-6">
