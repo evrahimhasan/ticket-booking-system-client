@@ -3,7 +3,6 @@ import RootLayout from "../RootLayout/RootLayout";
 import Home from "../Pages/Home/Home";
 import Login from "../Pages/Login";
 import SignUp from "../Pages/SignUp";
-import TicketBooking from "../Components/TicketBooking/TicketBooking";
 import DashBoardLayout from "../dashboardLayout/DashBoardLayout";
 import MainDashBoard from "../Pages/DashBoard/MainDashBoard";
 import AddTicket from "../Pages/DashBoard/AddTicket";
