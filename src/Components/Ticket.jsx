@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useLocation } from 'react-router-dom';
 
 const Ticket = () => {
@@ -12,6 +12,7 @@ const Ticket = () => {
     const date = params.get("date");
 
     const [tickets, setTickets] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -85,11 +86,11 @@ const Ticket = () => {
                             </div>
                         </div>
 
-                        <Link
-                            to='/seat-selection'
+                        <button
+                            onClick={() => navigate(`/seat/${ticket._id}`)}
                             className="w-full mt-4 bg-[#D31317] hover:bg-red-700 text-white font-bold py-2.5 px-6 rounded-md transition-colors text-sm">
                             View Seats
-                        </Link>
+                        </button>
                     </div>
 
                 </div>

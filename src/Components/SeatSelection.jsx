@@ -1,38 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GiSteeringWheel } from 'react-icons/gi';
 import { MdEventSeat } from 'react-icons/md';
+import { useParams } from 'react-router';
 
 const SeatSelection = () => {
-    // Row letters
-    const rows = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-
-    // Generate seats like A1 A2 A3 A4 , B1 B2 B3 B4
-    const mockSeats = rows.flatMap(row =>
-        [1, 2, 3, 4].map(num => {
-
-            const id = `${row}${num}`;
-
-            const randomStatus =
-                Math.random() < 0.1 ? 'BOOKED' :
-                    Math.random() < 0.15 ? 'SOLD' :
-                        Math.random() < 0.1 ? 'BLOCKED' :
-                            'AVAILABLE';
-
-            return { id, status: randomStatus };
-        })
-    );
-
-    const [seats] = useState(mockSeats);
+    const { id } = useParams(); // ticket ID from URL
+    const [ticket, setTicket] = useState(null);
+    const [seats, setSeats] = useState([]);
     const [selectedSeatIds, setSelectedSeatIds] = useState([]);
 
-    const seatFarePerSeat = 900;
+    useEffect(() => {
+        fetch(`http://localhost:5000/tickets/${id}`)
+            .then(res => res.json())
+            .then(data => {
+                setTicket(data);
+
+                // Generate seat layout based on totalSeats or a default 40
+                const rows = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+                const mockSeats = rows.flatMap(row =>
+                    [1, 2, 3, 4].map(num => {
+                        const seatId = `${row}${num}`;
+                        return { id: seatId, status: 'AVAILABLE' }; // Initially all available
+                    })
+                );
+                setSeats(mockSeats);
+            })
+            .catch(err => console.log(err));
+    }, [id]);
 
     const toggleSeat = (seatId) => {
-
-        const seat = seats.find(s => s.id === seatId);
-
-        if (seat.status !== 'AVAILABLE') return;
-
         setSelectedSeatIds(prev =>
             prev.includes(seatId)
                 ? prev.filter(id => id !== seatId)
@@ -40,134 +36,104 @@ const SeatSelection = () => {
         );
     };
 
+    if (!ticket) return <p>Loading ticket...</p>;
 
-    const getSeatColor = (seat) => {
-
-        if (selectedSeatIds.includes(seat.id))
-            return "text-green-600";
-
-        switch (seat.status) {
-
-            case 'AVAILABLE':
-                return "text-gray-600 hover:text-blue-600";
-
-            case 'BOOKED':
-                return "text-purple-600";
-
-            case 'SOLD':
-                return "text-pink-600";
-
-            case 'BLOCKED':
-                return "text-gray-400";
-
-            default:
-                return "text-gray-400";
-        }
-    };
-
+    // Price calculation
+    const seatFarePerSeat = ticket.price || 900;
     const selectedCount = selectedSeatIds.length;
-
     const totalFare = selectedCount * seatFarePerSeat;
-
     const serviceCharge = selectedCount > 0 ? 50 : 0;
     return (
         <div className="max-w-6xl mx-auto p-6 bg-white rounded-xl shadow-lg">
+            <h2 className="text-xl font-bold mb-4">{ticket.busName} - Seat Selection</h2>
+            <h2 className="text-xs">{ticket.from} - {ticket.to}</h2>
 
-            {/* Legend - unchanged */}
-            <div className="flex gap-6 justify-center text-sm mb-6">
-                <div className="flex items-center gap-1">
-                    <MdEventSeat className="text-gray-500" /> Available
-                </div>
-                <div className="flex items-center gap-1">
-                    <MdEventSeat className="text-green-600" /> Selected
-                </div>
-                <div className="flex items-center gap-1">
-                    <MdEventSeat className="text-purple-600" /> Booked
-                </div>
-                <div className="flex items-center gap-1">
-                    <MdEventSeat className="text-pink-600" /> Sold
-                </div>
-                <div className="flex items-center gap-1">
-                    <MdEventSeat className="text-gray-400" /> Blocked
-                </div>
-            </div>
-
-            <div className="flex flex-col lg:flex-row gap-10">
-
-                {/* BUS LAYOUT */}
-                <div className="lg:w-3/5 border p-6 rounded-lg">
-
-                    {/* DRIVER section - unchanged */}
-                    <div className="flex justify-between mb-6">
-                        <div className="text-sm text-gray-500">Front</div>
-                        <div className="flex items-center gap-2 text-gray-600">
-                            <GiSteeringWheel /> Driver
+            <div className="flex flex-col lg:flex-row gap-8">
+                {/* BUS Layout */}
+                <div className="border border-gray-300 p-5 md:p-6 rounded-xl bg-white shadow-sm flex-1">
+                    {/* Header with Front & Driver */}
+                    <div className="relative flex justify-between items-center mb-6 pb-3 border-b border-gray-200">
+                        <div className="text-lg font-semibold text-gray-700">Front</div>
+                        <div className="flex items-center gap-2.5 text-lg font-semibold text-gray-800">
+                            Driver
+                            <GiSteeringWheel className="text-4xl text-gray-700" />
                         </div>
+                        <div className="absolute bottom-0 left-0 right-0 h-px bg-gray-300"></div>
                     </div>
 
-                    {/* SEATS - updated layout */}
-                    <div className="space-y-3 md:space-y-4">
-
-                        {rows.map(row => {
-                            const rowSeats = seats.filter(s => s.id.startsWith(row));
-
-                            // Assuming your seats are ordered: A B | C D E   (2 left + 3 right)
-                            const leftSeats = rowSeats.slice(0, 2);   // A, B
-                            const rightSeats = rowSeats.slice(2, 5);   // C, D, E  (if you have 5 seats per row)
+                    {/* Seats in 2/2 formation */}
+                    <div className="flex flex-col gap-3">
+                        {Array.from({ length: Math.ceil(seats.length / 4) }).map((_, rowIndex) => {
+                            const rowSeats = seats.slice(rowIndex * 4, rowIndex * 4 + 4);
+                            const leftSeats = rowSeats.slice(0, 2);
+                            const rightSeats = rowSeats.slice(2, 4);
 
                             return (
-                                <div
-                                    key={row}
-                                    className="grid grid-cols-12 items-center gap-1 md:gap-2"
-                                >
-                                    {/* Left side seats (2 seats) */}
-                                    <div className="col-span-5 flex justify-end gap-1 md:gap-3 pr-2 md:pr-4">
-                                        {leftSeats.map(seat => (
-                                            <button
-                                                key={seat.id}
-                                                onClick={() => toggleSeat(seat.id)}
-                                                disabled={seat.status !== "AVAILABLE"}
-                                                className="flex flex-col items-center text-xs w-10 md:w-12"
-                                            >
-                                                <MdEventSeat
-                                                    className={`text-3xl md:text-4xl ${getSeatColor(seat)}`}
-                                                />
-                                                <span className="mt-1">{seat.id}</span>
-                                            </button>
-                                        ))}
+                                <div key={rowIndex} className="grid grid-cols-5 items-center gap-3 justify-items-center">
+                                    {/* Left side seats */}
+                                    <div className="col-span-2 flex justify-end gap-2">
+                                        {leftSeats.map(seat => {
+                                            const isSelected = selectedSeatIds.includes(seat.id);
+                                            const isBooked = seat.status !== 'AVAILABLE';
+                                            return (
+                                                <button
+                                                    key={seat.id}
+                                                    onClick={() => toggleSeat(seat.id)}
+                                                    disabled={isBooked}
+                                                    className={`flex flex-col items-center transition-all duration-150
+                        ${isBooked ? 'opacity-40 cursor-not-allowed' : 'hover:scale-105 cursor-pointer'}
+                        ${isSelected ? 'scale-110' : ''}`}
+                                                >
+                                                    <MdEventSeat
+                                                        className={`text-5xl sm:text-6xl
+                          ${isSelected ? 'text-green-600' : isBooked ? 'text-gray-300' : 'text-gray-500 hover:text-blue-600'}`}
+                                                    />
+                                                    <span className={`text-sm font-medium mt-1.5
+                          ${isSelected ? 'text-green-700 font-semibold' : isBooked ? 'text-gray-400' : 'text-gray-700'}`}>
+                                                        {seat.id}
+                                                    </span>
+                                                </button>
+                                            );
+                                        })}
                                     </div>
 
-                                    {/* Aisle - wider empty space like your drawing */}
-                                    <div className="col-span-2 text-center text-gray-300 text-xl md:text-2xl font-light">
-                                        {/* You can leave empty or put • • • or just space */}
-                                    </div>
+                                    {/* Aisle */}
+                                    <div className="col-span-1"></div>
 
-                                    {/* Right side seats (3 seats) */}
-                                    <div className="col-span-5 flex justify-start gap-1 md:gap-3 pl-2 md:pl-4">
-                                        {rightSeats.map(seat => (
-                                            <button
-                                                key={seat.id}
-                                                onClick={() => toggleSeat(seat.id)}
-                                                disabled={seat.status !== "AVAILABLE"}
-                                                className="flex flex-col items-center text-xs w-10 md:w-12"
-                                            >
-                                                <MdEventSeat
-                                                    className={`text-3xl md:text-4xl ${getSeatColor(seat)}`}
-                                                />
-                                                <span className="mt-1">{seat.id}</span>
-                                            </button>
-                                        ))}
+                                    {/* Right side seats */}
+                                    <div className="col-span-2 flex justify-start gap-2">
+                                        {rightSeats.map(seat => {
+                                            const isSelected = selectedSeatIds.includes(seat.id);
+                                            const isBooked = seat.status !== 'AVAILABLE';
+                                            return (
+                                                <button
+                                                    key={seat.id}
+                                                    onClick={() => toggleSeat(seat.id)}
+                                                    disabled={isBooked}
+                                                    className={`flex flex-col items-center transition-all duration-150
+                        ${isBooked ? 'opacity-40 cursor-not-allowed' : 'hover:scale-105 cursor-pointer'}
+                        ${isSelected ? 'scale-110' : ''}`}
+                                                >
+                                                    <MdEventSeat
+                                                        className={`text-5xl sm:text-6xl
+                          ${isSelected ? 'text-green-600' : isBooked ? 'text-gray-300' : 'text-gray-500 hover:text-blue-600'}`}
+                                                    />
+                                                    <span className={`text-sm font-medium mt-1.5
+                          ${isSelected ? 'text-green-700 font-semibold' : isBooked ? 'text-gray-400' : 'text-gray-700'}`}>
+                                                        {seat.id}
+                                                    </span>
+                                                </button>
+                                            );
+                                        })}
                                     </div>
                                 </div>
                             );
                         })}
-
                     </div>
-
                 </div>
 
-                {/* SUMMARY - unchanged */}
-                <div className="lg:w-2/5 bg-gray-50 p-5 rounded-lg border">
+                {/* SUMMARY */}
+                <div className="lg:w-1/3 bg-gray-50 p-5 rounded-lg border">
                     <h3 className="text-lg font-bold mb-4">Seat Summary</h3>
                     <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
@@ -191,6 +157,7 @@ const SeatSelection = () => {
                             <span>৳{totalFare + serviceCharge}</span>
                         </div>
                     </div>
+
                     <button
                         disabled={selectedCount === 0}
                         className="mt-6 w-full py-3 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700 disabled:opacity-50"
@@ -198,7 +165,6 @@ const SeatSelection = () => {
                         Proceed to Payment
                     </button>
                 </div>
-
             </div>
         </div>
     );
