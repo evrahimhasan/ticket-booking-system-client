@@ -1,11 +1,21 @@
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import React, { useEffect, useMemo, useState } from 'react';
 import { MapPin, Calendar, Navigation, Bus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
-
     const [index, setIndex] = useState(0);
     const [isSearching, setIsSearching] = useState(false);
+    const [from, setFrom] = useState("");
+    const [to, setTo] = useState("");
+    const [date, setDate] = useState("");
+    const navigate = useNavigate();
+
+    const handleSearch = () => {
+
+        navigate(`/tickets?from=${from}&to=${to}&date=${date}`);
+
+    }
 
     // Banner Data (Bus Images)
     const SLIDE_DATA = useMemo(() => [
@@ -127,7 +137,9 @@ const Banner = () => {
                                 <input
                                     type="text"
                                     placeholder="Leaving from..."
-                                    className="w-full bg-white/10 border border-white/10 text-white rounded-2xl py-4 pl-12 pr-4 outline-none focus:bg-white/20 transition-all"
+                                    value={from}
+                                    onChange={(e) => setFrom(e.target.value)}
+                                    className="w-full bg-white/10 border border-white/10 text-white rounded-2xl py-4 pl-12 pr-4"
                                 />
                             </div>
                         </div>
@@ -142,7 +154,9 @@ const Banner = () => {
                                 <input
                                     type="text"
                                     placeholder="Going to..."
-                                    className="w-full bg-white/10 border border-white/10 text-white rounded-2xl py-4 pl-12 pr-4 outline-none focus:bg-white/20 transition-all"
+                                    value={to}
+                                    onChange={(e) => setTo(e.target.value)}
+                                    className="w-full bg-white/10 border border-white/10 text-white rounded-2xl py-4 pl-12 pr-4"
                                 />
                             </div>
                         </div>
@@ -156,14 +170,18 @@ const Banner = () => {
                                 <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
                                 <input
                                     type="date"
-                                    className="w-full bg-white/10 border border-white/10 text-white rounded-2xl py-4 pl-12 pr-4 outline-none focus:bg-white/20 transition-all"
+                                    value={date}
+                                    onChange={(e) => setDate(e.target.value)}
+                                    className="w-full bg-white/10 border border-white/10 text-white rounded-2xl py-4 pl-12 pr-4"
                                 />
                             </div>
                         </div>
 
                         {/* SEARCH BUTTON */}
-                        <button className="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 rounded-2xl shadow-lg shadow-orange-900/20 transition-all flex items-center justify-center gap-2 group">
-                            <Bus className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                        <button
+                            onClick={handleSearch}
+                            className="w-full bg-orange-600 hover:bg-orange-500 text-white font-bold py-4 rounded-2xl"
+                        >
                             Search Buses
                         </button>
                     </div>

@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
 const Ticket = () => {
+    const location = useLocation();
+
+    const params = new URLSearchParams(location.search);
+
+    const from = params.get("from");
+    const to = params.get("to");
+    const date = params.get("date");
 
     const [tickets, setTickets] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/tickets")
-            .then(res => res.json())
-            .then(data => setTickets(data));
-    }, []);
 
-    // console.log(tickets);
+        fetch(`http://localhost:5000/tickets?from=${from || ""}&to=${to || ""}&date=${date || ""}`)
+            .then(res => res.json())
+            .then(data => setTickets(data))
+
+    }, [location.search])
 
     return (
         <div className="space-y-6">
@@ -22,7 +30,7 @@ const Ticket = () => {
                     <div className="flex-1 border-r-0 md:border-r border-gray-100 pr-4">
                         <h2 className="text-xl font-bold text-gray-800">{ticket.busName}</h2>
                         <p className="text-xs text-gray-400 mt-1 uppercase tracking-wider">
-                           Bus Number: {ticket.busNumber}
+                            Bus Number: {ticket.busNumber}
                         </p>
 
                         <div className="mt-3 flex items-center gap-2">

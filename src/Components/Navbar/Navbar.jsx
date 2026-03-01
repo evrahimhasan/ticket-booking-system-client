@@ -150,7 +150,7 @@ const Navbar = () => {
                     <div className="hidden lg:flex gap-6 items-center">
                         <NavLink to="/" className={navClass}>Home</NavLink>
                         <NavLink to="/search-ticket" className={navClass}>Search Ticket</NavLink>
-                        <NavLink to="/ticket" className={navClass}>Ticket</NavLink>
+                        <NavLink to="/tickets" className={navClass}>Ticket</NavLink>
                         <NavLink to="/about-us" className={navClass}>About Us</NavLink>
                     </div>
 
