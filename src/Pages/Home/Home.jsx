@@ -8,9 +8,16 @@ import BookingSteps from '../../Components/BookingSteps';
 const Home = () => {
     return (
         <div>
-            <BookingSteps></BookingSteps>
-            <PopularRoutes></PopularRoutes>
-            <WhyChoseUs></WhyChoseUs>
+
+            {/* Banner only Home page */}
+            <Banner />
+            <div className='w-11/12 mx-auto my-3'>
+
+                <BookingSteps />
+                <PopularRoutes />
+                <WhyChoseUs />
+            </div>
+
         </div>
     );
 };

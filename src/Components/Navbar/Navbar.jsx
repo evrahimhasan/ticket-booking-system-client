@@ -1,5 +1,5 @@
 import React, { use, useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useLocation } from 'react-router';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { MdDarkMode, MdDirectionsBus, MdLightMode } from 'react-icons/md';
@@ -8,6 +8,9 @@ const Navbar = () => {
     const { user, logOut, role } = use(AuthContext)
     const [theme, setTheme] = useState(localStorage.getItem('theme') || "light")
     const [isOpen, setIsOpen] = useState(false);
+
+     const location = useLocation();
+    const isHome = location.pathname === "/";
 
     useEffect(() => {
         const html = document.querySelector('html')
@@ -132,7 +135,14 @@ const Navbar = () => {
         //     </div>
         // </nav>
 
-        <nav className="fixed top-0 left-0 z-[100] w-full bg-white/70 dark:bg-gray-950/70 backdrop-blur-lg border-b border-gray-100/20 dark:border-gray-800/50 transition-all duration-300">
+        <nav className={`
+            ${isHome
+                ? "fixed top-0 left-0 z-[100] w-full bg-white/70 dark:bg-gray-950/70 backdrop-blur-lg"
+                : "sticky top-0 z-[100] w-full bg-base-100 dark:bg-gray-950"
+            }
+            border-b border-gray-100/20 dark:border-gray-800/50
+            transition-all duration-300
+            `}>
             <div className="container mx-auto py-3">
                 <div className="flex justify-between items-center h-16 md:h-20">
 
@@ -149,7 +159,6 @@ const Navbar = () => {
                     {/* Desktop Menu */}
                     <div className="hidden lg:flex gap-6 items-center">
                         <NavLink to="/" className={navClass}>Home</NavLink>
-                        <NavLink to="/search-ticket" className={navClass}>Search Ticket</NavLink>
                         <NavLink to="/tickets" className={navClass}>Ticket</NavLink>
                         <NavLink to="/about-us" className={navClass}>About Us</NavLink>
                     </div>
@@ -199,8 +208,7 @@ const Navbar = () => {
             <div className={`lg:hidden overflow-hidden transition-all duration-300 ${isOpen ? "max-h-[400px] border-t bg-white dark:bg-gray-950 shadow-xl" : "max-h-0"}`}>
                 <div className="p-6 flex flex-col gap-4 text-center">
                     <NavLink to="/" className={navClass}>Home</NavLink>
-                    <NavLink to="/search-ticket" className={navClass}>Search Ticket</NavLink>
-                    <NavLink to="/ticket" className={navClass}>Ticket</NavLink>
+                    <NavLink to="/tickets" className={navClass}>Ticket</NavLink>
                     <NavLink to="/about-us" className={navClass}>About Us</NavLink>
                     {!user && <Link to="/login" className="btn bg-orange-600 text-white border-none">Login</Link>}
                 </div>

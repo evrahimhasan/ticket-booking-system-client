@@ -30,10 +30,6 @@ const router = createBrowserRouter([
                 Component: SignUp
             },
             {
-                path: '/search-ticket',
-                Component: TicketBooking
-            },
-            {
                 path: '/tickets',
                 Component: Ticket
             },
