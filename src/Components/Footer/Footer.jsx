@@ -48,14 +48,22 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-bold mb-8 uppercase tracking-widest text-orange-500">Quick Links</h3>
                         <ul className="space-y-4">
-                            {['Home', 'Search Tickets', 'Check Booking', 'Offers', 'About Us'].map((link) => (
-                                <li key={link}>
-                                    <a href="#" className="text-zinc-400 hover:text-orange-500 transition-colors duration-300 flex items-center gap-2 group">
-                                        <span className="h-1.5 w-1.5 rounded-full bg-orange-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-                                        {link}
-                                    </a>
-                                </li>
-                            ))}
+                            <li className="text-zinc-400 hover:text-orange-500 
+                                    transition-colors duration-300">
+                                <a href="/">Home</a>
+                            </li>
+                            <li className="text-zinc-400 hover:text-orange-500 
+                                    transition-colors duration-300">
+                                <a href="/">Search Tickets</a>
+                            </li>
+                            <li className="text-zinc-400 hover:text-orange-500 
+                                    transition-colors duration-300">
+                                <a href="/">Check Booking</a>
+                            </li>
+                            <li className="text-zinc-400 hover:text-orange-500 
+                                    transition-colors duration-300">
+                                <a href="/about-us">About Us</a>
+                            </li>
                         </ul>
                     </div>
 
@@ -65,7 +73,8 @@ const Footer = () => {
                         <ul className="space-y-4">
                             {['Contact Us', 'Terms & Conditions', 'Privacy Policy', 'Refund Policy', 'FAQ'].map((link) => (
                                 <li key={link}>
-                                    <a href="#" className="text-zinc-400 hover:text-orange-500 transition-colors duration-300">
+                                    <a href="#" className="text-zinc-400 hover:text-orange-500 
+                                    transition-colors duration-300">
                                         {link}
                                     </a>
                                 </li>
