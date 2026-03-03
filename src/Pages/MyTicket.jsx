@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
 import { motion } from 'framer-motion';
 import { FaTicketAlt, FaBus, FaCalendarAlt, FaChair, FaQrcode } from 'react-icons/fa';
+import jsPDF from "jspdf";
+import { autoTable } from "jspdf-autotable";
 
 const MyTicket = () => {
     const [bookings, setBookings] = useState([]);
@@ -15,6 +17,30 @@ const MyTicket = () => {
             .then(data => setBookings(data))
             .catch(err => console.error(err));
     }, [userEmail]);
+
+    const downloadPDF = (booking) => {
+        const doc = new jsPDF();
+
+        // Title
+        doc.setFontSize(18);
+        doc.text("Bus Ticket", 14, 20);
+
+        // Ticket Info
+        doc.setFontSize(12);
+        doc.text(`Ticket ID: ${booking.ticketId}`, 14, 30);
+        doc.text(`User Email: ${booking.userEmail}`, 14, 38);
+        doc.text(`Booking Date: ${new Date(booking.bookingDate).toLocaleString()}`, 14, 46);
+        doc.text(`Total Paid: ৳${booking.totalAmount}`, 14, 54);
+
+        // Seats Table
+        autoTable(doc, {
+            startY: 65,
+            head: [["Seat Number"]],
+            body: booking.selectedSeats.map((seat) => [seat]),
+        });
+
+        doc.save(`Ticket-${booking.ticketId}.pdf`);
+    };
 
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-zinc-950 py-16 px-6 transition-colors duration-500">
@@ -82,7 +108,7 @@ const MyTicket = () => {
                                                     <FaChair className="text-orange-500" /> Selected Seats
                                                 </p>
                                                 <h4 className="text-xl font-black text-slate-800 
-                                                dark:text-white tracking-tighter">
+                                                dark:text-white tracking-tighter italic">
                                                     {Array.isArray(booking.selectedSeats) ? booking.selectedSeats.join(", ") : "N/A"}
                                                 </h4>
                                             </div>
@@ -103,7 +129,9 @@ const MyTicket = () => {
                                                     <span className="text-orange-500">৳</span> {booking.totalAmount ?? "0"}
                                                 </p>
                                             </div>
-                                            <button className="text-[10px] font-black text-orange-500 uppercase tracking-[0.2em] hover:text-zinc-900 transition-colors">
+                                            <button
+                                                onClick={() => downloadPDF(booking)}
+                                                className="text-[10px] font-black text-orange-500 uppercase tracking-[0.2em] hover:text-zinc-900 transition-colors">
                                                 Download PDF
                                             </button>
                                         </div>
