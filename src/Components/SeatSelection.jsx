@@ -16,18 +16,28 @@ const SeatSelection = () => {
         fetch(`http://localhost:5000/tickets/${id}`)
             .then(res => res.json())
             .then(data => {
+                console.log("Seats Data:", data.seats);  // 👈 এটা দেখো
                 setTicket(data);
-                const rows = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-                const mockSeats = rows.flatMap(row =>
-                    [1, 2, 3, 4].map(num => ({
-                        id: `${row}${num}`,
-                        status: Math.random() > 0.8 ? 'BOOKED' : 'AVAILABLE' // 20% random booked for realism
-                    }))
-                );
-                setSeats(mockSeats);
-            })
-            .catch(err => console.log(err));
+                setSeats(data.seats || []);
+            });
     }, [id]);
+
+    // useEffect(() => {
+    //     fetch(`http://localhost:5000/tickets/${id}`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             setTicket(data);
+    //             // const rows = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+    //             // const mockSeats = rows.flatMap(row =>
+    //             //     [1, 2, 3, 4].map(num => ({
+    //             //         id: `${row}${num}`,
+    //             //         status: Math.random() > 0.8 ? 'BOOKED' : 'AVAILABLE' // 20% random booked for realism
+    //             //     }))
+    //             // );
+    //             setSeats(data.seats || []);
+    //         })
+    //         .catch(err => console.log(err));
+    // }, [id]);
 
     const toggleSeat = (seatId) => {
         setSelectedSeatIds(prev =>
@@ -98,10 +108,10 @@ const SeatSelection = () => {
                                         <div className="col-span-2 flex gap-3">
                                             {rowSeats.slice(0, 2).map(seat => (
                                                 <SeatButton
-                                                    key={seat.id}
-                                                    seat={seat}
-                                                    isSelected={selectedSeatIds.includes(seat.id)}
-                                                    onClick={() => toggleSeat(seat.id)}
+                                                    key={seat.seatNo}
+                                                    seat={seat}   // ✅ এটা add করো
+                                                    isSelected={selectedSeatIds.includes(seat.seatNo)}
+                                                    onClick={() => toggleSeat(seat.seatNo)}
                                                 />
                                             ))}
                                         </div>
@@ -113,10 +123,10 @@ const SeatSelection = () => {
                                         <div className="col-span-2 flex gap-3">
                                             {rowSeats.slice(2, 4).map(seat => (
                                                 <SeatButton
-                                                    key={seat.id}
+                                                    key={seat.seatNo}
                                                     seat={seat}
-                                                    isSelected={selectedSeatIds.includes(seat.id)}
-                                                    onClick={() => toggleSeat(seat.id)}
+                                                    isSelected={selectedSeatIds.includes(seat.seatNo)}
+                                                    onClick={() => toggleSeat(seat.seatNo)}
                                                 />
                                             ))}
                                         </div>
@@ -189,14 +199,14 @@ const SeatButton = ({ seat, isSelected, onClick }) => {
             className={`relative flex flex-col items-center group ${isBooked ? 'cursor-not-allowed' : 'cursor-pointer'}`}
         >
             <MdEventSeat className={`text-5xl transition-colors duration-300 ${isSelected ? 'text-orange-500 drop-shadow-[0_0_10px_rgba(249,115,22,0.4)]' :
-                    isBooked ? 'text-slate-200 dark:text-zinc-800' :
-                        'text-slate-300 dark:text-zinc-700 hover:text-orange-400'
+                isBooked ? 'text-slate-200 dark:text-zinc-800' :
+                    'text-slate-300 dark:text-zinc-700 hover:text-orange-400'
                 }`} />
             <span className={`text-[10px] font-black mt-1 ${isSelected ? 'text-orange-500' :
-                    isBooked ? 'text-slate-300 dark:text-zinc-800' :
-                        'text-slate-400 dark:text-zinc-600'
+                isBooked ? 'text-slate-300 dark:text-zinc-800' :
+                    'text-slate-400 dark:text-zinc-600'
                 }`}>
-                {seat.id}
+                {seat.seatNo}
             </span>
             {isBooked && <div className="absolute top-4 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-slate-400/30 rotate-45 rounded-full" />}
         </motion.button>

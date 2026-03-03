@@ -111,14 +111,10 @@ const Footer = () => {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="pt-10 border-t border-zinc-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="pt-10 border-t border-zinc-900 text-center">
                     <p className="text-zinc-500 text-sm font-medium">
-                        © 2026 <span className="text-orange-500 font-bold uppercase italic">BusAura</span> — All Rights Reserved.
+                        © 2026 <span className="text-orange-500 font-bold italic">BusAura</span> — All Rights Reserved.
                     </p>
-                    <div className="flex gap-6 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500">
-                        {/* Shadharon image placeholder for payment methods */}
-                        <img src="https://i.ibb.co/Vv3YpxV/payment-methods.png" alt="Payments" className="h-8" />
-                    </div>
                 </div>
             </div>
         </footer>
