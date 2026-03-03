@@ -66,6 +66,7 @@ const Navbar = () => {
                         <NavLink to="/" className={navClass}>Home</NavLink>
                         <NavLink to="/tickets" className={navClass}>Ticket</NavLink>
                         <NavLink to="/about-us" className={navClass}>About Us</NavLink>
+                        <NavLink to="/my-tickets" className={navClass}>My Ticket</NavLink>
                     </div>
 
                     {/* Right Side */}
