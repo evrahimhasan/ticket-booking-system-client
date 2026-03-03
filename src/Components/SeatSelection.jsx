@@ -171,6 +171,12 @@ const SeatSelection = () => {
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
                                 disabled={selectedCount === 0}
+                                onClick={() => navigate(`/payment/${id}`, {
+                                    state: {
+                                        selectedSeats: selectedSeatIds,
+                                        totalAmount: totalFare + serviceCharge
+                                    }
+                                })}
                                 className="w-full py-5 bg-orange-500 text-white font-black rounded-2xl shadow-xl shadow-orange-500/20 disabled:bg-zinc-800 disabled:text-zinc-500 disabled:shadow-none transition-all uppercase italic tracking-[0.2em] text-xs flex items-center justify-center gap-2"
                             >
                                 Proceed to Payment <FaChevronRight />

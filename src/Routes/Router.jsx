@@ -11,6 +11,7 @@ import Ticket from "../Components/Ticket";
 import SeatSelection from "../Components/SeatSelection";
 import AllUser from "../Pages/DashBoard/AllUser";
 import AboutUs from "../Pages/AboutUs";
+import Payment from "../Pages/payment/Payment";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             {
                 path: '/seat/:id',
                 Component: SeatSelection
+            },
+            {
+                path: '/payment/:id',
+                Component: Payment
             }
         ]
     },
