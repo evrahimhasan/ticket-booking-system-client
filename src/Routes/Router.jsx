@@ -10,6 +10,7 @@ import ManageTickets from "../Pages/DashBoard/ManageTickets";
 import Ticket from "../Components/Ticket";
 import SeatSelection from "../Components/SeatSelection";
 import AllUser from "../Pages/DashBoard/AllUser";
+import AboutUs from "../Pages/AboutUs";
 
 const router = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
             {
                 index: true,
                 Component: Home
+            },
+            {
+                path:'about-us',
+                Component: AboutUs
             },
             {
                 path: '/login',
