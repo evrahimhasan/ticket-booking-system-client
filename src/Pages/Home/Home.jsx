@@ -11,7 +11,7 @@ const Home = () => {
 
             {/* Banner only Home page */}
             <Banner />
-            <div className='w-11/12 mx-auto my-3'>
+            <div className=''>
 
                 <BookingSteps />
                 <PopularRoutes />
