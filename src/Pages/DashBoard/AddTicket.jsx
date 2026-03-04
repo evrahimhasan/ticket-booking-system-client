@@ -33,12 +33,12 @@ const AddTicket = () => {
             status: form.status.value,
             mainPhotoURL
         };
-        console.log(ticketData);
+        // console.log(ticketData);
 
         if (res.data.success == true) {
             axios.post('https://ticket-booking-system-server.vercel.app/tickets', ticketData)
                 .then(res => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     form.reset();
                 })
                 .catch(error => {

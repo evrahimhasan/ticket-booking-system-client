@@ -1,16 +1,64 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# [Client Live Link](https://neon-kangaroo-68c554.netlify.app/)
+# [Server Live Link](https://ticket-booking-system-server.vercel.app/)
+# [Server Github repo Link](https://github.com/evrahimhasan/ticket-booking-system-server.git)
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Project Name: **BusAura**
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Description:
 
-## Expanding the ESLint configuration
+The BusAura Application is a reliable and user-friendly online bus ticket booking platform that allows passengers to effortlessly browse available routes, select preferred seats, and purchase tickets securely. Built with the **MERN stack (MongoDB, Express.js, React, Node.js)**, BusAura streamlines the ticket booking experience, manages bookings efficiently, and provides real-time seat availability, making travel planning simple and convenient for users across the country.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+## 🌟 Key Features
+- **User Roles**: Admin, Passenger
+- **Authentication**: Secure Registration & Login
+- **Search & Browse Tickets**:
+  - Search buses by from, to, and date
+  - View available tickets with seat availability
+- **Ticket Booking**: 
+ - Select seats and book tickets
+ - Real-time seat tracking
+- **Payment Integration**: Update profile with avatar, blood group, and location
+ - Pay securely via Stripe
+- **Admin Dashboard**: Search donors by blood group, district, and upazila
+ - Manage users and tickets
+ - View booking statistics and ticket details
+- **Funding Page**: Users can donate funds via Stripe (optional)
+- **404 Page**: Custom responsive 404 page with blood donation theme
+
+
+Technologies Used:
+
+Frontend-->
+
+{
+  "@tailwindcss/vite": "^4.1.17",
+  "axios": "^1.13.2",
+  "firebase": "^12.6.0",
+  "react": "^19.2.0",
+  "react-dom": "^19.2.0",
+  "react-icons": "^5.5.0",
+  "react-responsive-carousel": "^3.2.23",
+  "react-router": "^7.10.1",
+  "react-toastify": "^11.0.5",
+  "sweetalert2": "^11.26.10",
+  "tailwindcss": "^4.1.17"
+}
+
+
+Backend-->
+
+{ Node.js,
+Express.js,
+MongoDB,
+CORS,
+dotenv }
+
+
+Authentication-->
+
+{ Firebase Auth (Email/Password + Google Login) }

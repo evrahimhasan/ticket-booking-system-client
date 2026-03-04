@@ -14,6 +14,7 @@ import AboutUs from "../Pages/AboutUs";
 import Payment from "../Pages/payment/Payment";
 import PaymentSuccess from "../Pages/payment/PaymentSuccess";
 import MyTicket from "../Pages/MyTicket";
+import Error404 from "../Pages/errorpage/Error404";
 
 const router = createBrowserRouter([
     {
@@ -79,6 +80,10 @@ const router = createBrowserRouter([
                 Component: AllUser
             }
         ]
+    },
+    {
+        path: '/*',
+        element: <Error404></Error404>
     }
 ]);
 export default router;

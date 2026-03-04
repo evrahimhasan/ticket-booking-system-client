@@ -164,23 +164,23 @@ const SignUp = () => {
             </motion.div>
 
             {/* Custom Styles for Inputs */}
-            <style jsx>{`
-                .signup-input {
-                    width: 100%;
-                    background: rgba(24, 24, 27, 0.5);
-                    border: 1px solid rgba(255, 255, 255, 0.1);
-                    border-radius: 1rem;
-                    padding: 1rem 1.5rem;
-                    color: white;
-                    font-size: 0.875rem;
-                    transition: all 0.3s;
-                }
-                .signup-input:focus {
-                    outline: none;
-                    border-color: rgba(249, 115, 22, 0.5);
-                    background: rgba(24, 24, 27, 0.8);
-                }
-            `}</style>
+            <style>{`
+    .signup-input {
+        width: 100%;
+        background: rgba(24, 24, 27, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 1rem;
+        padding: 1rem 1.5rem;
+        color: white;
+        font-size: 0.875rem;
+        transition: all 0.3s;
+    }
+    .signup-input:focus {
+        outline: none;
+        border-color: rgba(249, 115, 22, 0.5);
+        background: rgba(24, 24, 27, 0.8);
+    }
+`}</style>
         </div>
     );
 };
