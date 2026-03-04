@@ -13,17 +13,17 @@ const SeatSelection = () => {
     const [selectedSeatIds, setSelectedSeatIds] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/tickets/${id}`)
+        fetch(`https://ticket-booking-system-server.vercel.app/tickets/${id}`)
             .then(res => res.json())
             .then(data => {
-                console.log("Seats Data:", data.seats);  // 👈 এটা দেখো
+                // console.log("Seats Data:", data.seats);
                 setTicket(data);
                 setSeats(data.seats || []);
             });
     }, [id]);
 
     // useEffect(() => {
-    //     fetch(`http://localhost:5000/tickets/${id}`)
+    //     fetch(`https://ticket-booking-system-server.vercel.app/tickets/${id}`)
     //         .then(res => res.json())
     //         .then(data => {
     //             setTicket(data);

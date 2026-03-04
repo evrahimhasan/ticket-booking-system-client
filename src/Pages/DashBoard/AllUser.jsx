@@ -6,7 +6,7 @@ const AllUser = () => {
     const [users, setUsers] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/users")
+        fetch("https://ticket-booking-system-server.vercel.app/users")
             .then(res => res.json())
             .then(data => setUsers(data.user || []));
     }, []);
@@ -15,7 +15,7 @@ const AllUser = () => {
 
 
     const handleStatusChange = (email, status) => {
-        fetch(`http://localhost:5000/update/user/status?email=${email}&status=${status}`, {
+        fetch(`https://ticket-booking-system-server.vercel.app/update/user/status?email=${email}&status=${status}`, {
             method: "PATCH"
         })
             .then(res => res.json())

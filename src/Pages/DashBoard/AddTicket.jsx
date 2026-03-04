@@ -36,9 +36,10 @@ const AddTicket = () => {
         console.log(ticketData);
 
         if (res.data.success == true) {
-            axios.post('http://localhost:5000/tickets', ticketData)
+            axios.post('https://ticket-booking-system-server.vercel.app/tickets', ticketData)
                 .then(res => {
                     console.log(res.data);
+                    form.reset();
                 })
                 .catch(error => {
                     console.log(error);
@@ -58,6 +59,8 @@ const AddTicket = () => {
                 <input name="busName"
                     placeholder="Bus Name"
                     required
+                    value="BusAura"
+                    readOnly
                     className="input input-bordered w-full" />
 
                 <select name="busType"

@@ -6,7 +6,7 @@ const ManageTickets = () => {
     const [tickets, setTickets] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/tickets")
+        fetch("https://ticket-booking-system-server.vercel.app/tickets")
             .then(res => res.json())
             .then(data => setTickets(data));
     }, []);
@@ -21,7 +21,7 @@ const ManageTickets = () => {
     //         confirmButtonText: "Yes, delete it!",
     //     }).then((result) => {
     //         if (result.isConfirmed) {
-    //             fetch(`http://localhost:5000/edit-tickets/${id}`, {
+    //             fetch(`https://ticket-booking-system-server.vercel.app/edit-tickets/${id}`, {
     //                 method: "PUT"
     //             })
     //                 .then(res => res.json())
@@ -42,7 +42,7 @@ const ManageTickets = () => {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/delete-tickets/${id}`, {
+                fetch(`https://ticket-booking-system-server.vercel.app/delete-tickets/${id}`, {
                     method: "DELETE"
                 })
                     .then(res => res.json())

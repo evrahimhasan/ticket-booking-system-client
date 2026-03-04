@@ -126,17 +126,6 @@ const Aside = () => {
                         </NavLink>
 
 
-                        <NavLink
-                            to="/dashboard/myprofile"
-                            className={({ isActive }) =>
-                                `flex items-center gap-3 p-3 rounded-lg transition ${isActive
-                                    ? "bg-white text-orange-600 font-semibold shadow-md"
-                                    : "hover:bg-orange-500 hover:bg-opacity-80"
-                                }`
-                            }
-                        >
-                            <MdOutlinePublishedWithChanges className="h-5 w-5" /> My Profile
-                        </NavLink>
                         {/* Theme Toggle */}
                         <div className="flex items-center gap-2">
                             <MdLightMode className='text-yellow-500' />

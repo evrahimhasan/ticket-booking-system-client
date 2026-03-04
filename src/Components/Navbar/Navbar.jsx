@@ -9,7 +9,7 @@ const Navbar = () => {
     const [theme, setTheme] = useState(localStorage.getItem('theme') || "light")
     const [isOpen, setIsOpen] = useState(false);
 
-     const location = useLocation();
+    const location = useLocation();
     const isHome = location.pathname === "/";
 
     useEffect(() => {
@@ -116,6 +116,7 @@ const Navbar = () => {
                     <NavLink to="/" className={navClass}>Home</NavLink>
                     <NavLink to="/tickets" className={navClass}>Ticket</NavLink>
                     <NavLink to="/about-us" className={navClass}>About Us</NavLink>
+                    <NavLink to="/my-tickets" className={navClass}>My Ticket</NavLink>
                     {!user && <Link to="/login" className="btn bg-orange-600 text-white border-none">Login</Link>}
                 </div>
             </div>

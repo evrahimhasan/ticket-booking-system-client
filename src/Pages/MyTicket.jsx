@@ -12,7 +12,7 @@ const MyTicket = () => {
 
     useEffect(() => {
         if (!userEmail) return;
-        fetch(`http://localhost:5000/my-bookings/${userEmail}`)
+        fetch(`https://ticket-booking-system-server.vercel.app/my-bookings/${userEmail}`)
             .then(res => res.json())
             .then(data => setBookings(data))
             .catch(err => console.error(err));

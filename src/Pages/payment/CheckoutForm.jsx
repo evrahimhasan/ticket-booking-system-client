@@ -15,7 +15,7 @@ const CheckoutForm = ({ ticketId, selectedSeats, totalAmount, user }) => {
     useEffect(() => {
         if (!totalAmount) return;
 
-        fetch("http://localhost:5000/create-payment-intent", {
+        fetch("https://ticket-booking-system-server.vercel.app/create-payment-intent", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ amount: totalAmount }),
@@ -54,7 +54,7 @@ const CheckoutForm = ({ ticketId, selectedSeats, totalAmount, user }) => {
 
             if (paymentIntent.status === "succeeded") {
                 // 🔥 Payment success: Confirm booking on backend
-                const res = await fetch("http://localhost:5000/confirm-booking", {
+                const res = await fetch("https://ticket-booking-system-server.vercel.app/confirm-booking", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({
